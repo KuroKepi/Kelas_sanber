@@ -5,7 +5,7 @@
         
         public function atraksi($elang)
         {
-            return "Kemudian ".$this->nama." berlari cepat untuk menangkap ".$elang->nama." yang sedang terbang tinggi untuk menghindar"."."."<br>";
+            return "Kemudian ".$this->nama." ber".$this->keahlian." untuk menangkap ".$elang->nama." yang sedang ".$elang->keahlian." untuk menghindar"."."."<br>";
         }
     }
     
@@ -20,8 +20,9 @@
 
         public function diserang($harimau)
         {
+            $harimau->darah = $harimau->darah-($this->attackPower/$harimau->defencePower);
             $this->darah = $this->darah-($harimau->attackPower/$this->defencePower);
-            return " Elang terkena serangan oleh ".$harimau->nama. " yang menyebabkan darah berkurang menjadi ".$this->darah."."."<br>";
+            return " Elang terkena serangan oleh ".$harimau->nama. " yang menyebabkan darah berkurang menjadi ".$this->darah."lalu ".$harimau->nama." terkena serangan dan darah berkurang menjadi ".$harimau->darah."."."<br>";
         }
     }
    
