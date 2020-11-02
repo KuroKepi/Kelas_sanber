@@ -22,7 +22,7 @@
         {
             $harimau->darah = $harimau->darah-($this->attackPower/$harimau->defencePower);
             $this->darah = $this->darah-($harimau->attackPower/$this->defencePower);
-            return " Elang terkena serangan oleh ".$harimau->nama. " yang menyebabkan darah berkurang menjadi ".$this->darah."lalu ".$harimau->nama." terkena serangan dan darah berkurang menjadi ".$harimau->darah."."."<br>";
+            return " Elang terkena serangan oleh ".$harimau->nama. " yang menyebabkan darah berkurang menjadi ".$this->darah." lalu ".$harimau->nama." terkena serangan dan darah berkurang menjadi ".$harimau->darah."."."<br>";
         }
     }
    
