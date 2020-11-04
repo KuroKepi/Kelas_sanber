@@ -12,7 +12,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-       'id_users', 'nama_users', 'password_users', 'email_users',
+       'id_users', 'name', 'password', 'email',
     ];
     protected $primaryKey = 'id_users';
 
@@ -52,4 +52,29 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Role');
     }
+
+    public function verif()
+    {
+        if($this->email_verified_at != null )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function status()
+    {
+        if($this->id_role =='5e35fc81-77db-49b3-8a98-d1e0d5986bea')
+        {
+            return true;
+        }
+        else
+        {
+            false;
+        }
+    }
+
 }
