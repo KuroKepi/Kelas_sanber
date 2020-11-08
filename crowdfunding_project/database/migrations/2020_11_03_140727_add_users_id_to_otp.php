@@ -14,7 +14,7 @@ class AddUsersIdToOtp extends Migration
     public function up()
     {
         Schema::table('otps', function (Blueprint $table) {
-            $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_user')->references('id_users')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -26,8 +26,8 @@ class AddUsersIdToOtp extends Migration
     public function down()
     {
         Schema::table('otps', function (Blueprint $table) {
-            $table->dropForeign(['id_users']);
-            $table->dropColumn(['id_users']);
+            $table->dropForeign(['id_user']);
+            $table->dropColumn(['id_user']);
         });
     }
 }

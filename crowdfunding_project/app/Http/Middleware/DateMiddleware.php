@@ -16,11 +16,14 @@ class DateMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $curr_date = Carbon::now()->day;
-        if($curr_date >=1 && $curr_date<=10)
+        $current_date  = Carbon::now()->day;
+        if($current_date >=9 && $current_date <= 10)
         {
             return $next($request);
         }
-            abort(403);
+            return response()->json([
+                'message'   => 'Belum tanggalnya'
+            ]);
+            // abort(403);
     }
 }

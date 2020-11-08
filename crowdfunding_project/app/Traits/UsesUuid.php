@@ -1,13 +1,12 @@
 <?php
 
-
 namespace App\Traits;
 use Illuminate\Support\Str;
 
-trait UuidTrait{
+trait UsesUuid{
 
-    protected static function bootUuidTrait() {
-            parent::boot();
+    protected static function bootUsesUuid() {
+            // parent::boot();
             static::creating(function ($model) {
                 if ( ! $model->getKey()) {
                     $model->{$model->getKeyName()} = (string) Str::uuid();
@@ -25,6 +24,5 @@ trait UuidTrait{
         return 'string';
     }
 }
-
 
 ?>

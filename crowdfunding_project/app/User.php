@@ -2,79 +2,90 @@
 
 namespace App;
 
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
+use App\Traits\UsesUuid;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+    use UsesUuid;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
     protected $fillable = [
-       'id_users', 'name', 'password', 'email',
+        'name', 'email', 'password',
     ];
-    protected $primaryKey = 'id_users';
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function getIncrementing()
-    {
-        return false;
-    }
-
-    public function getKeyType()
-    {
-        return 'string';
-    }
-
-    protected static function boot() {
-        parent::boot();
-        static::creating(function ($model) {
-            if ( ! $model->getKey()) {
-                $model->{$model->getKeyName()} = (string) Str::uuid();
-            }
-        });
-    }
-
-    public function otp()
-    {
-        return $this->hasOne('App\Otp');
-    }
 
     public function role()
     {
         return $this->belongsTo('App\Role');
     }
 
-    public function verif()
+    public function otpCode()
     {
-        if($this->email_verified_at != null )
-        {
-            return true;
-        }
-        else
+        return $this->hasOne('App\OtpCode');
+    }
+
+    public function get_user_role_id()
+    {
+        $role = \App\Role::where('name','user')->first();
+        return $role->id;
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function($model){
+            $model->role_id = $model->get_user_role_id();
+        });
+    }
+
+    public function isAdmin()
+    {
+        if($this->role_id === $this->get_user_role_id())
         {
             return false;
         }
+        return true;
     }
 
-    public function status()
+    public function getJWTIdentifier()
     {
-        if($this->id_role =='5e35fc81-77db-49b3-8a98-d1e0d5986bea')
-        {
-            return true;
-        }
-        else
-        {
-            false;
-        }
+        return $this->getKey();
     }
 
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }

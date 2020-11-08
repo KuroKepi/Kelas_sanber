@@ -17,26 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::middleware(['dateMiddleware','auth'])->group(function(){
-    Route::get('/tes', 'UserController@tes');
+Route::get('/test', 'TestController@test')->middleware('dateMiddleware');
+Route::middleware(['auth','email_verified','admin'])->group(function(){
+    Route::get('/admin', 'UserController@admin');
 });
-
+Route::middleware(['auth','email_verified'])->group(function(){
+    Route::get('/user', 'UserController@user');
+});
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::middleware(['auth','emailMiddleware'])->group(function(){
-
-    Route::get('/tanpaemail', 'UserController@tanpaemail');
-});
-
-Route::middleware(['auth','emailMiddleware','roleMiddleware'])->group(function(){
-    Route::get('/tanpaadmin', 'UserController@tanpaadmin');
-});
-
-Route::get('/full');

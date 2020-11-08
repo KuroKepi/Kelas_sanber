@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use App\Role;
+
 class RoleSeeder extends Seeder
 {
     /**
@@ -11,19 +13,15 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert([
+        Role::insert([
             [
-            'id_role'       => Str::uuid(),
-            'nama_role'     => 'Admin',
-            'created_at'    => now(),
-            'updated_at'    => now()
+                'id'    => Str::uuid(),
+                'name'  => 'admin',
             ],
             [
-            'id_role'       => 'aac5960e-5f58-4b72-b23b-140a638ea481',
-            'nama_role'     => 'User',
-            'created_at'    => now(),
-            'updated_at'    => now()
-            ]
+                'id'    => Str::uuid(),
+                'name'  => 'user',
+            ],
         ]);
     }
 }

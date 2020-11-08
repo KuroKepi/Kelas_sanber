@@ -22,7 +22,10 @@ class RoleMiddleware
         }
         else
         {
-            abort(405);
+            // abort(405);
+            return response()->json([
+                'message' => 'Anda bukan admin'
+            ]);
         }
     }
 }

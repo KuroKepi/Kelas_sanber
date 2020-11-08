@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+Route::post('register','Auth_2\RegisterController@register');
+Route::post('verifikasi','Auth_2\RegisterController@verifikasi');
+Route::post('regenerate','Auth_2\RegisterController@regenerateOtp');
+Route::post('password','Auth_2\RegisterController@passwordReset');
+Route::post('login','Auth_2\LoginController@login');
+Route::post('logout','Auth_2\LogoutController@logout');
+Route::get('user','Auth_2\UserController@user');

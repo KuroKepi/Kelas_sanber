@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOtpTable extends Migration
+class CreateOtpsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,16 +14,13 @@ class CreateOtpTable extends Migration
     public function up()
     {
         Schema::create('otps', function (Blueprint $table) {
-            $table->uuid('id_otp')->unique();
-            $table->uuid('id_user');
-            $table->integer('code_otp',10);
+            $table->uuid('id')->primary();
+            $table->integer('otp');
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->dateTime('valid_until');
+            $table->timestamps();
         });
-
-
-        // Schema::table('otp', function (Blueprint $table){
-        //         $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade')->onUpdate('cascade');
-        //     });
     }
 
     /**

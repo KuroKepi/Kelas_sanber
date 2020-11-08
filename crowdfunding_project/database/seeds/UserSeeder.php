@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
+use App\Role;
 
 class UserSeeder extends Seeder
 {
@@ -15,34 +15,26 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             [
                 //user biasa
-                'id_users'          => Str::uuid(),
+                'id'                => Str::uuid(),
                 'name'              => "Kukuh Yoga Rizki Ananda User",
                 'password'          => Hash::make('123'),
                 'email'             => "123@gmail.com",
-                'email_verified_at'  => now(),
+                'email_verified_at' => now(),
                 'created_at'        => now(),
                 'updated_at'        => now(),
+                'role_id'           => Role::where('name', 'user')->first()->id
             ],
             [
                 //admin
-                'id_users'          => Str::uuid(),
+                'id'                => Str::uuid(),
                 'name'              => "Kukuh Yoga Rizki Ananda Admin",
                 'password'          => Hash::make('123'),
                 'email'             => "1234@gmail.com",
-                'email_verified_at'  => now(),
+                'email_verified_at' => now(),
                 'created_at'        => now(),
                 'updated_at'        => now(),
+                'role_id'           => Role::where('name', 'admin')->first()->id
             ],
-            [
-                //belom verif
-                'id_users'          => Str::uuid(),
-                'name'              => "Kukuh Yoga Rizki Ananda Verif",
-                'password'          => Hash::make('123'),
-                'email'             => "12345@gmail.com",
-                // 'email_verified_at'  => now(),
-                'created_at'        => now(),
-                'updated_at'        => now(),
-            ]
         ]);
     }
 }
