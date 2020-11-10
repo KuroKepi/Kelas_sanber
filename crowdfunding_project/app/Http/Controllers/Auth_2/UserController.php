@@ -50,21 +50,20 @@ class UserController extends Controller
                 'response_message'  => "Akun anda belum melakukan verifikasi"
             ]);
         }
-        request()->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $user = $request->user();
-        $path = $request->photo->store('/photo/users','public');
-        $user->name = request('name');
-        $user->photo = $path;
-        $user->save();
+        $imageName = time().'.'.$request->image->extension();
+
+        $request->image->move(public_path('photo/users'), $imageName);
 
         return response()->json([
             'response_code' => '00',
             'response_message' => 'Berhasil Update profile',
             'data' => [
-                'profile' => $user
+                'profile' => $imageName
             ]
         ]);
     }
