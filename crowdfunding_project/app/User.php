@@ -46,9 +46,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo('App\Role');
     }
 
-    public function otpCode()
+    public function otp()
     {
-        return $this->hasOne('App\OtpCode');
+        return $this->hasOne('App\Otp');
     }
 
     public function get_user_role_id()

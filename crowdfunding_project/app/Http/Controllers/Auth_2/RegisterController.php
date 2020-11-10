@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Hash;
 use App\User;
 use App\Otp;
+use App\Events\UserRegisteredEvent;
+use App\Events\UserRegenerateOtpEvent;
 
 class RegisterController extends Controller
 {
@@ -41,20 +43,25 @@ class RegisterController extends Controller
             'password' => ['required']
         ]);
 
-        $tes = User::create([
+        $user = User::create([
             'name'      => request('name'),
             'email'     => request('email'),
             'password'  => Hash::make(request('password'))
         ]);
+        $data['user'] = $user;
 
         Otp::create([
             'otp'          => rand(1000,9999),
-            'user_id'       => $tes->id,
-            'valid_until'   =>  now()->addHours(2)
-        ]);
-        return response()->json([
+            'user_id'       => $user->id,
+            'valid_until'   =>  now()->addMinutes(2)
+            ]);
+
+            event(new UserRegisteredEvent($user));
+
+            return response()->json([
             'response_code'     => "00",
-            'response_message'  => "Silakan cek email anda untuk verif, kode otp hanya berlaku 2 jam !"
+            'response_message'  => "Silakan cek email anda untuk verif, kode otp hanya berlaku 2 jam !",
+            'data'              => $data
         ]);
     }
 
@@ -94,9 +101,9 @@ class RegisterController extends Controller
 
     public function regenerateOtp(Request $request)
     {
-        $tes2 = User::where('email',$request->email)->first();
+        $user = User::where('email',$request->email)->first();
 
-        if($tes2==null)
+        if($user==null)
         {
             return response()->json([
                 'response_code'     => "01",
@@ -105,10 +112,12 @@ class RegisterController extends Controller
         }
 
         //update otp
-        Otp::where('user_id',$tes2->id)->update([
+        Otp::where('user_id',$user->id)->update([
             'otp'          => rand(1000,9999),
             'valid_until'   =>  now()->addHours(2),
         ]);
+        event(new UserRegenerateOtpEvent($user));
+
         return response()->json([
             'response_code'     => "00",
             'response_message'  => "Kode OTP sudah dibuat ulang, kode hanya berlaku 2 jam"
