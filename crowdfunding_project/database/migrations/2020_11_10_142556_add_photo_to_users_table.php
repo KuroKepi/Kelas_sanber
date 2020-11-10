@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUsersIdToOtp extends Migration
+class AddPhotoToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddUsersIdToOtp extends Migration
      */
     public function up()
     {
-        Schema::table('otps', function (Blueprint $table) {
-            $table->foreign('id_user')->references('id_users')->on('users')->onDelete('cascade')->onUpdate('cascade');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('photo')->nullable();
         });
     }
 
@@ -25,9 +25,8 @@ class AddUsersIdToOtp extends Migration
      */
     public function down()
     {
-        Schema::table('otps', function (Blueprint $table) {
-            $table->dropForeign(['id_user']);
-            $table->dropColumn(['id_user']);
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['photo']);
         });
     }
 }

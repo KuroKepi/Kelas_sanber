@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Role;
 
-class UserSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,15 +13,16 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            //user biasa
+
+            //admin
             'id'                => Str::uuid(),
-            'name'              => "Kukuh Yoga Rizki Ananda User",
+            'name'              => "Kukuh Yoga Rizki Ananda Admin",
             'password'          => Hash::make('123'),
-            'email'             => "123@gmail.com",
+            'email'             => "1234@gmail.com",
+            'email_verified_at' => now(),
             'created_at'        => now(),
             'updated_at'        => now(),
-            'role_id'           => Role::where('name', 'user')->first()->id
-
+            'role_id'           => Role::where('name', 'admin')->first()->id
         ]);
     }
 }

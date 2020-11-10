@@ -24,3 +24,7 @@ Route::post('password','Auth_2\RegisterController@passwordReset');
 Route::post('login','Auth_2\LoginController@login');
 Route::post('logout','Auth_2\LogoutController@logout');
 Route::get('user','Auth_2\UserController@user');
+Route::middleware(['auth'])->group(function(){
+    Route::get('profile', 'Auth_2\UserController@profile');
+    Route::post('update', 'Auth_2\UserController@update');
+});

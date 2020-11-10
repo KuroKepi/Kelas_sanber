@@ -140,4 +140,7 @@ class RegisterController extends Controller
             'response_message'  => "Password telah diubah !"
         ]);
     }
+    //php artisan jwt:secret
+    //php artisan cache:clear
+    //php artisan config:clear
 }

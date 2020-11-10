@@ -14,20 +14,16 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->uuid('id_users')->primary();
-            $table->uuid('role_id');
-            $table->string('name',50);
-            $table->string('password',191);
-            $table->string('email',50)->unique();
+            $table->uuid('id')->primary();
+            $table->string('name');
+            $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            // $table->rememberToken();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
 
-    // Schema::table('role', function (Blueprint $table){
-        //     $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade')->onUpdate('cascade');
-        // });
     /**
      * Reverse the migrations.
      *
