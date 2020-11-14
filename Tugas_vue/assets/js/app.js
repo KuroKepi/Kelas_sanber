@@ -8,7 +8,7 @@ new Vue({
         },
         {
             title : "komentar 2",
-            date : new Date('DD-MM-YYYY'),
+            date : new Date(),
             score : 2
         }],
         textarea:''
