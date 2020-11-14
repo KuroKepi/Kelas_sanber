@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Vue</title>
+    </head>
+    <body>
+        <div id="app">
+            <ul>
+                <li style="list-style: none;" v-for="kom in komentar">
+                    {{kom.title}} dengan score {{kom.score}} pada tanggal {{kom.date}}
+                </li>
+            </ul>
+            <textarea cols="30" rows="10" v-model="textarea" v-on:keyup.enter="listcomment"></textarea>
+            <br>
+            <!-- <p style="white-space:pre-line;">{{textarea}}</p> -->
+        </div>
+        <script src="assets/vendor/vue.js"></script>
+        <script src="assets/js/app.js"></script>
+    </body>
+</html>
