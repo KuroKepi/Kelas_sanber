@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Vue Crud</title>
+    </head>
+    <body>
+        <div id="app">
+            <form @submit.prevent="tambah">
+                <input type="hidden" v-model="id">
+                <input type="text" v-model="blank">
+                <button type="submit" v-show="!update">Tambah</button> <!-- jika tidak update maka tombol update tidak muncul --> 
+                <button type="button" v-show="update" @click="updatee(id,blank)">Update</button> <!-- jika tombol edit di klik maka tombol add akan berubah menjadi update -->
+            </form>
+            <ul>
+                <li style="list-style: none;" v-for="(kom,index) in users" >
+                    {{kom.nama}}
+                    <div>
+                        <button @click="edit(index, kom.nama)" >Edit</button>
+                        <button @click="hapus(index)">Hapus</button>
+                      </div>
+                </li>
+            </ul>
+        </div>
+        <script src="assets/vendor/vue.js"></script>
+        <script src="assets/js/app.js"></script>
+    </body>
+</html>
